@@ -1,10 +1,4 @@
 # SAE_Cloud_Cyber
-<br>
-
-### Les membres du groupe : <br>
-- Joey GALLIGANI<br>
-- Ilker ONAY<br>
-- Alexis BRUNEL<br>
 
 <br>
 
