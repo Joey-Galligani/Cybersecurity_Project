@@ -1,0 +1,23 @@
+---
+- name: "Installation Elastic on DC"
+  hosts: dc
+  gather_facts: false
+  tasks:
+    - name: "Download Elastic Agent"
+      win_shell: |
+        Invoke-WebRequest -Uri https://artifacts.elastic.co/downloads/beats/elastic-agent/elastic-agent-8.9.0-windows-x86_64.zip -OutFile elastic-agent-8.9.0-windows-x86_64.zip
+      args:
+        executable: powershell.exe
+
+    - name: "Extract Elastic Agent Archive"
+      win_shell: |
+        Expand-Archive .\elastic-agent-8.9.0-windows-x86_64.zip -DestinationPath .
+      args:
+       executable: powershell.exe
+
+    - name: "Install Elastic Agent"
+      win_shell: |
+        .\elastic-agent-8.9.0-windows-x86_64\elastic-agent.exe install --url=https://10.202.0.192:8220 --enrollment-token=RHVSSkVJd0JLSnRGUVB1OFBnajc6V1ZBQzZoZk9TeXl1V2ZDakMxalZxZw== --insecure -f
+      args:
+        executable: powershell.exe
+

@@ -1,0 +1,30 @@
+---
+- name: "Installation Wazuh on DC"
+  hosts: dc
+  gather_facts: false
+  tasks:
+    - name: "Download Wazuh"
+      win_shell: |
+        Invoke-WebRequest -Uri https://packages.wazuh.com/4.x/windows/wazuh-agent-4.7.0-1.msi -OutFile ${env.tmp}\wazuh-agent
+      args:
+        executable: powershell.exe
+
+    - name: "Configuration de l'agent"
+      win_shell: |
+        msiexec.exe /i ${env.tmp}\wazuh-agent /q WAZUH_MANAGER='10.202.0.162' WAZUH_AGENT_GROUP='default' WAZUH_REGISTRATION_SERVER='10.202.0.162'
+      args:
+       executable: powershell.exe
+
+    - name: "Restart du service Wazuh"
+      win_shell: |
+        NET STOP WazuhSvc
+      args:
+       executable: powershell.exe
+
+
+    - name: "Restart du service Wazuh"
+      win_shell: |
+        NET START WazuhSvc
+      args:
+       executable: powershell.exe
+
